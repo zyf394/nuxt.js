@@ -1,7 +1,7 @@
 import NuxtCommand from './index'
 
 export class ExternalNuxtCommand extends NuxtCommand {
-  static resolveExternal(cmd) {
+  static resolve(cmd) {
     const resolvers = [
       () => require.resolve(`@nuxt/${cmd}`),
       () => require.resolve(`@nuxtjs/${cmd}`),
@@ -14,13 +14,15 @@ export class ExternalNuxtCommand extends NuxtCommand {
       }
     } while (resolvers.length)
   }
-  
-  static loadExternal(cmd) {
-    const cmdsRoot = resolve(getExternalCommand(cmd), 'commands')
-    const file = filterCommands(cmdsRoot).find((c) => {
+
+  static load(nuxtModule, cmd) {
+    const modulePath = this.resolve(nuxtModule)
+    const nuxtConfig = resolve(modulePath, 'nuxt.config.js')
+    const cmdsRoot = resolve(modulePath, 'commands')
+    const file = ExternalNuxtCommand.filterCommands(cmdsRoot).find((c) => {
       return parse(c).name === cmd
     })
     const command = requireModule(join(cmdsRoot, file))
-    return NuxtCommand.from(command.default)
+    return NuxtCommand.from({ ...command.default, config: nuxtConfig })
   }
 }

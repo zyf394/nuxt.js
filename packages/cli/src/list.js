@@ -1,16 +1,16 @@
 import chalk from 'chalk'
 import NuxtCommand from './command'
-import { getLocalCommands, loadLocalCommand } from './local'
+import LocalNuxtCommand from './command/local'
 import { indent, foldLines, startSpaces, optionSpaces, colorize } from './utils/formatting'
 
 export default async function listCommands() {
   const commandsOrder = ['dev', 'build', 'generate', 'start', 'help']
-  const localCommands = getLocalCommands()
+  const localCommands = LocalNuxtCommand.getCommands() 
 
   // Load all commands
   const _commands = await Promise.all(
     commandsOrder.map(cmd => NuxtCommand.load(cmd))
-      .concat(localCommands.map(cmd => loadLocalCommand(cmd)))
+      .concat(localCommands.map(cmd => LocalNuxtCommand.load(cmd)))
   )
 
   let maxLength = 0
