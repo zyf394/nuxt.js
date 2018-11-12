@@ -1,7 +1,7 @@
 import { resolve, join, parse } from 'path'
 import { existsSync } from 'fs'
 import { requireModule, filterCommands } from '../utils'
-import NuxtCommand from './command'
+import NuxtCommand from './index'
 
 export default class LocalNuxtCommand extends NuxtCommand {
   static exists(name, root = '.') {

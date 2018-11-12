@@ -2,11 +2,11 @@
 import consola from 'consola'
 import parseArgs from 'minimist'
 import setup from '../setup'
-import { name, version } from '../package.json'
+import { name, version } from '../../package.json'
 import { indent, foldLines, startSpaces, optionSpaces, colorize } from '../utils/formatting'
 import * as commands from '../commands'
 import * as imports from '../imports'
-import { loadNuxtConfig } from './utils'
+import { loadNuxtConfig } from '../utils'
 
 export default class NuxtCommand {
   constructor({ name, description, usage, options, run, root } = {}) {
