@@ -9,4 +9,4 @@ application files to the package's root directory.
 This means that `sample-module` (a NPM-published package) may have as its main
 module a file that properly exports a function, like Nuxt expects -- but also
 include files such as `nuxt.config.js`, `pages` and `commands` as part of the
-package, which can be resolved and loaded by `nuxt/cli`.
+package, which can be resolved and loaded by `@nuxt/cli`.
