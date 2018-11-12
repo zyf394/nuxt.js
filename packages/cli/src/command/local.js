@@ -15,7 +15,7 @@ export default class LocalNuxtCommand extends NuxtCommand {
     return filterCommands(resolve(root, 'commands')).map(cmd => parse(cmd).name)
   }
 
-  static loadLocal(cmd, root = '.') {
+  static load(cmd, root = '.') {
     const cmdsRoot = resolve(root, 'commands')
     const file = filterCommands(cmdsRoot).find((c) => {
       return parse(c).name === cmd
