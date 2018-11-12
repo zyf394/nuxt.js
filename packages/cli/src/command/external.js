@@ -2,16 +2,16 @@ import { filterCommands } from '../utils'
 import NuxtCommand from './index'
 
 export class ExternalNuxtCommand extends NuxtCommand {
-  static resolve(cmd) {
+  static resolve(nuxtModule) {
     const resolvers = [
-      () => require.resolve(`@nuxt/${cmd}`),
-      () => require.resolve(`@nuxtjs/${cmd}`),
-      () => require.resolve(`${cmd}`)
+      () => require.resolve(`@nuxt/${nuxtModule}`),
+      () => require.resolve(`@nuxtjs/${nuxtModule}`),
+      () => require.resolve(`${nuxtModule}`)
     ]  
     do {
-      const command = resolvers.shift()()
-      if (command) {
-        return command
+      nuxtModule = resolvers.shift()()
+      if (nuxtModule) {
+        return nuxtModule
       }
     } while (resolvers.length)
   }
