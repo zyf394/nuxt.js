@@ -1,7 +1,6 @@
 import consola from 'consola'
 import NuxtCommand from './command'
 import * as commands from './commands'
-import setup from './setup'
 import listCommands from './list'
 import { existsLocalCommand, loadLocalCommand } from './local'
 
@@ -14,6 +13,9 @@ export default function run() {
   } else if (existsLocalCommand(cmd)) {
     return loadLocalCommand(cmd).run()
       .catch(error => consola.fatal(error))
+  } else if (existsExternalCommand(cmd)) {
+    return loadExternalCommand(cmd).run()
+      .catch(error => consola.fatal(error))
   } else {
     if (process.argv.includes('--help') || process.argv.includes('-h')) {
       listCommands().then(() => process.exit(0))
@@ -21,11 +23,6 @@ export default function run() {
     }
     cmd = defaultCommand
   }
-
-  // Setup runtime
-  setup({
-    dev: cmd === 'dev'
-  })
 
   return NuxtCommand.load(cmd)
     .then(command => command.run())

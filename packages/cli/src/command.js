@@ -4,14 +4,23 @@ import { loadNuxtConfig } from './utils'
 import { indent, foldLines, startSpaces, optionSpaces, colorize } from './utils/formatting'
 import * as commands from './commands'
 import * as imports from './imports'
+import setup from './setup'
 
 export default class NuxtCommand {
-  constructor({ name, description, usage, options, run } = {}) {
+  constructor({ name, description, usage, options, run, config } = {}) {
     this.name = name || ''
     this.description = description || ''
     this.usage = usage || ''
+    this.nuxtConfig = 
     this.options = Object.assign({}, options)
-    this._run = run
+    this._run = function() {
+      try {
+        setup({ dev: name === 'dev' })
+        run.call(this)      
+      } catch(error) {
+        consola.fatal(error)
+      }
+    }
   }
 
   static async load(name) {
