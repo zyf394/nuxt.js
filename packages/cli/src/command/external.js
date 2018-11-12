@@ -8,7 +8,7 @@ export default class ExternalNuxtCommand extends NuxtCommand {
     const resolvers = [
       () => require.resolve(`@nuxt/${nuxtModule}`),
       () => require.resolve(`@nuxtjs/${nuxtModule}`),
-      () => require.resolve(`${nuxtModule}`)
+      () => require.resolve(nuxtModule)
     ]
     do {
       nuxtModule = resolvers.shift()()
