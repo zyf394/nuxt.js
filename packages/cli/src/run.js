@@ -6,6 +6,7 @@ import listCommands from './list'
 
 export default function run() {
   const defaultCommand = 'dev'
+  // eslint-disable-next-line prefer-const
   let [cmd, subcmd] = process.argv.slice(2, 3)
 
   if (typeof subcmd === 'string') {

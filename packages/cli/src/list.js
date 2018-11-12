@@ -5,7 +5,7 @@ import { indent, foldLines, startSpaces, optionSpaces, colorize } from './utils/
 
 export default async function listCommands() {
   const commandsOrder = ['dev', 'build', 'generate', 'start', 'help']
-  const localCommands = LocalNuxtCommand.getCommands() 
+  const localCommands = LocalNuxtCommand.getCommands()
 
   // Load all commands
   const _commands = await Promise.all(

@@ -3,11 +3,11 @@ import { existsSync } from 'fs'
 import { requireModule, filterCommands } from '../utils'
 import NuxtCommand from './command'
 
-export class LocalNuxtCommand extends NuxtCommand {
-  static exists(name) {
-    const cmdsRoot = resolve('.', 'commands')
+export default class LocalNuxtCommand extends NuxtCommand {
+  static exists(name, root = '.') {
+    const cmdsRoot = resolve(root, 'commands')
     if (existsSync(cmdsRoot)) {
-      return filterCommands(cmdsRoot).includes(`${cmd}.js`)
+      return filterCommands(cmdsRoot).includes(`${name}.js`)
     }
   }
 

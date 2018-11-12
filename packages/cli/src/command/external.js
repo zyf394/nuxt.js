@@ -2,7 +2,7 @@ import { filterCommands } from '../utils'
 import NuxtCommand from './index'
 import LocalNuxtCommand from './local'
 
-export class ExternalNuxtCommand extends NuxtCommand {
+export default class ExternalNuxtCommand extends NuxtCommand {
   static resolve(nuxtModule) {
     const resolvers = [
       () => require.resolve(`@nuxt/${nuxtModule}`),
@@ -21,7 +21,7 @@ export class ExternalNuxtCommand extends NuxtCommand {
     const modulePath = this.resolve(nuxtModule)
     if (LocalNuxtCommand.exists(cmd, modulePath)) {
       cmd = NuxtCommand.from({
-        ...requireModule(join(modulePath, 'commands', `${cmd}.js`),
+        ...requireModule(join(modulePath, 'commands', `${cmd}.js`)),
         root: modulePath
       })
     } else if (NuxtModule.exists(cmd)) {

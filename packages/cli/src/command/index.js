@@ -1,11 +1,12 @@
 
+import consola from 'consola'
 import parseArgs from 'minimist'
+import setup from '../setup'
 import { name, version } from '../package.json'
-import { loadNuxtConfig } from './utils'
 import { indent, foldLines, startSpaces, optionSpaces, colorize } from '../utils/formatting'
 import * as commands from '../commands'
 import * as imports from '../imports'
-import setup from '../setup'
+import { loadNuxtConfig } from './utils'
 
 export default class NuxtCommand {
   constructor({ name, description, usage, options, run, root } = {}) {
@@ -14,11 +15,11 @@ export default class NuxtCommand {
     this.usage = usage || ''
     this.root = root
     this.options = Object.assign({}, options)
-    this._run = function() {
+    this._run = function () {
       try {
         setup({ dev: name === 'dev' })
         run.call(this)
-      } catch(error) {
+      } catch (error) {
         consola.fatal(error)
       }
     }
@@ -30,7 +31,8 @@ export default class NuxtCommand {
 
   static async load(name) {
     if (name in commands) {
-      const cmd = await commands[name]() // eslint-disable-line import/namespace
+      // eslint-disable-next-line import/namespace
+      const cmd = await commands[name]()
         .then(m => m.default)
       return NuxtCommand.from(cmd)
     } else {
