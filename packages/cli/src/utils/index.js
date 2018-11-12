@@ -21,6 +21,10 @@ export const requireModule = esm(module, {
 const getRootDir = argv => path.resolve(argv._[0] || '.')
 const getNuxtConfigFile = argv => path.resolve(getRootDir(argv), argv['config-file'])
 
+export function filterCommands(dir) {
+  return path.readdirSync(dir).filter(c => c.endsWith('.js'))
+}
+
 export async function loadNuxtConfig(argv, customRootDir = null) {
   const rootDir = customRootDir || getRootDir(argv)
   const nuxtConfigFile = customRootDir

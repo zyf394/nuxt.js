@@ -1,6 +1,6 @@
 import { resolve, join, parse } from 'path'
-import { readdirSync, existsSync } from 'fs'
-import { requireModule } from '../utils'
+import { existsSync } from 'fs'
+import { requireModule, filterCommands } from '../utils'
 import NuxtCommand from './command'
 
 export class LocalNuxtCommand extends NuxtCommand {
@@ -9,10 +9,6 @@ export class LocalNuxtCommand extends NuxtCommand {
     if (existsSync(cmdsRoot)) {
       return this.filterCommands(cmdsRoot).includes(`${cmd}.js`)
     }
-  }
-
-  static filterCommands(dir) {
-    return readdirSync(dir).filter(c => c.endsWith('.js'))
   }
 
   static getLocalCommands() {

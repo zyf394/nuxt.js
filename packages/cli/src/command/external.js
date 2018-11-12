@@ -1,3 +1,4 @@
+import { filterCommands } from '../utils'
 import NuxtCommand from './index'
 
 export class ExternalNuxtCommand extends NuxtCommand {
@@ -18,7 +19,7 @@ export class ExternalNuxtCommand extends NuxtCommand {
   static load(nuxtModule, cmd) {
     const modulePath = this.resolve(nuxtModule)
     const cmdsRoot = resolve(modulePath, 'commands')
-    const file = ExternalNuxtCommand.filterCommands(cmdsRoot).find((c) => {
+    const file = filterCommands(cmdsRoot).find((c) => {
       return parse(c).name === cmd
     })
     const command = requireModule(join(cmdsRoot, file))

@@ -74,7 +74,7 @@ export default class NuxtCommand {
   }
 
   async getNuxtConfig(argv, extraOptions) {
-    const config = await loadNuxtConfig(argv)
+    const config = await loadNuxtConfig(argv, this.root)
     const options = Object.assign(config, extraOptions || {})
 
     for (const name of Object.keys(this.options)) {
