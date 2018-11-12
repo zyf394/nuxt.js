@@ -4,25 +4,23 @@ import { requireModule, filterCommands } from '../utils'
 import NuxtCommand from './command'
 
 export class LocalNuxtCommand extends NuxtCommand {
-  static existsLocal(cmd) {
-    const cmdsRoot = resolve('.', 'commands')
+  static exists(name, root) {
+    const cmdsRoot = resolve(root, 'commands')
     if (existsSync(cmdsRoot)) {
-      return this.filterCommands(cmdsRoot).includes(`${cmd}.js`)
+      return filterCommands(cmdsRoot).includes(`${cmd}.js`)
     }
   }
 
-  static getLocalCommands() {
-    const cmdsRoot = resolve('.', 'commands')
-    const cmds = LocalNuxtCommand.filterCommands(cmdsRoot)
-    return cmds.map(cmd => parse(cmd).name)
+  static getCommands(root) {
+    return filterCommands(resolve(root, 'commands')).map(cmd => parse(cmd).name)
   }
 
-  static loadLocal(cmd) {
-    const cmdsRoot = resolve('.', 'commands')
-    const file = LocalNuxtCommand.filterCommands(cmdsRoot).find((c) => {
+  static loadLocal(cmd, root) {
+    const cmdsRoot = resolve(root, 'commands')
+    const file = filterCommands(cmdsRoot).find((c) => {
       return parse(c).name === cmd
     })
     const command = requireModule(join(cmdsRoot, file))
-    return NuxtCommand.from(command.default)
+    return NuxtCommand.from({ ...command.default, root })
   }
 }
