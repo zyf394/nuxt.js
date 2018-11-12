@@ -15,4 +15,10 @@ describe('custom commands', () => {
     nuxtDev.stdout.on('data', (data) => { stdout += data })
     await waitUntil(() => stdout.includes('test-arg'))
   })
+  test('loads and run app module commands', async () => {
+    let stdout = ''
+    const nuxtDev = spawnNuxt('app-module', 'test-cmd', ['test-arg'])
+    nuxtDev.stdout.on('data', (data) => { stdout += data })
+    await waitUntil(() => stdout.includes('test-arg'))
+  })
 })
