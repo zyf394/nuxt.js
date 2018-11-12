@@ -1,6 +1,7 @@
+import { join } from 'path'
+import { requireModule } from '../utils'
 import LocalNuxtCommand from './local'
 import NuxtCommand from './index'
-import { requireModule } from '../utils'
 
 export default class ExternalNuxtCommand extends NuxtCommand {
   static resolve(nuxtModule) {
@@ -24,8 +25,8 @@ export default class ExternalNuxtCommand extends NuxtCommand {
         ...requireModule(join(modulePath, 'commands', `${cmd}.js`)),
         root: modulePath
       })
-    } else if (NuxtModule.exists(cmd)) {
-      cmd = NuxtCommand.from({ ...command.default, root: modulePath })
+    } else if (NuxtCommand.exists(cmd)) {
+      cmd = NuxtCommand.load(cmd, modulePath)
     }
     return cmd
   }

@@ -29,12 +29,12 @@ export default class NuxtCommand {
     return name in commands
   }
 
-  static async load(name) {
+  static async load(name, root = '.') {
     if (name in commands) {
       // eslint-disable-next-line import/namespace
       const cmd = await commands[name]()
         .then(m => m.default)
-      return NuxtCommand.from(cmd)
+      return NuxtCommand.from({ ...cmd, root })
     } else {
       // TODO dynamic module loading
       throw new Error('Command ' + name + ' could not be loaded!')
