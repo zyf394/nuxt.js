@@ -1,3 +1,4 @@
+
 import parseArgs from 'minimist'
 import { name, version } from '../package.json'
 import { loadNuxtConfig } from './utils'
@@ -20,13 +21,6 @@ export default class NuxtCommand {
       } catch(error) {
         consola.fatal(error)
       }
-    }
-  }
-
-  static existsLocal(cmd) {
-    const cmdsRoot = resolve('.', 'commands')
-    if (existsSync(cmdsRoot)) {
-      return this.filterCommands(cmdsRoot).includes(`${cmd}.js`)
     }
   }
 
