@@ -17,12 +17,11 @@ export class ExternalNuxtCommand extends NuxtCommand {
 
   static load(nuxtModule, cmd) {
     const modulePath = this.resolve(nuxtModule)
-    const nuxtConfig = resolve(modulePath, 'nuxt.config.js')
     const cmdsRoot = resolve(modulePath, 'commands')
     const file = ExternalNuxtCommand.filterCommands(cmdsRoot).find((c) => {
       return parse(c).name === cmd
     })
     const command = requireModule(join(cmdsRoot, file))
-    return NuxtCommand.from({ ...command.default, config: nuxtConfig })
+    return NuxtCommand.from({ ...command.default, root: modulePath })
   }
 }

@@ -8,11 +8,11 @@ import * as imports from '../imports'
 import setup from '../setup'
 
 export default class NuxtCommand {
-  constructor({ name, description, usage, options, run, config } = {}) {
+  constructor({ name, description, usage, options, run, root } = {}) {
     this.name = name || ''
     this.description = description || ''
     this.usage = usage || ''
-    this.nuxtConfig = 
+    this.root = root
     this.options = Object.assign({}, options)
     this._run = function() {
       try {
@@ -22,6 +22,10 @@ export default class NuxtCommand {
         consola.fatal(error)
       }
     }
+  }
+
+  static exists(name) {
+    return name in commands 
   }
 
   static async load(name) {

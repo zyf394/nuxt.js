@@ -50,6 +50,9 @@ export async function loadNuxtConfig(argv, customRootDir = null) {
   } else if (argv['config-file'] !== 'nuxt.config.js') {
     consola.fatal('Could not load config file: ' + argv['config-file'])
   }
+  if (typeof customRootDir === 'string') {
+    options.buildDir = getRootDir(argv)
+  }
   if (typeof options.rootDir !== 'string') {
     options.rootDir = rootDir
   }
