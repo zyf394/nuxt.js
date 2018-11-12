@@ -26,7 +26,7 @@ export default class NuxtCommand {
   }
 
   static exists(name) {
-    return name in commands 
+    return name in commands
   }
 
   static async load(name) {

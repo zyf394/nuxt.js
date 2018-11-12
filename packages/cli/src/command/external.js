@@ -1,6 +1,6 @@
-import { filterCommands } from '../utils'
-import NuxtCommand from './index'
 import LocalNuxtCommand from './local'
+import NuxtCommand from './index'
+import { requireModule } from '../utils'
 
 export default class ExternalNuxtCommand extends NuxtCommand {
   static resolve(nuxtModule) {
@@ -8,7 +8,7 @@ export default class ExternalNuxtCommand extends NuxtCommand {
       () => require.resolve(`@nuxt/${nuxtModule}`),
       () => require.resolve(`@nuxtjs/${nuxtModule}`),
       () => require.resolve(`${nuxtModule}`)
-    ]  
+    ]
     do {
       nuxtModule = resolvers.shift()()
       if (nuxtModule) {
