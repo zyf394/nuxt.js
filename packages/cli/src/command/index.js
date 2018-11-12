@@ -2,10 +2,10 @@
 import parseArgs from 'minimist'
 import { name, version } from '../package.json'
 import { loadNuxtConfig } from './utils'
-import { indent, foldLines, startSpaces, optionSpaces, colorize } from './utils/formatting'
-import * as commands from './commands'
-import * as imports from './imports'
-import setup from './setup'
+import { indent, foldLines, startSpaces, optionSpaces, colorize } from '../utils/formatting'
+import * as commands from '../commands'
+import * as imports from '../imports'
+import setup from '../setup'
 
 export default class NuxtCommand {
   constructor({ name, description, usage, options, run, config } = {}) {
