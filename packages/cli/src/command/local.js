@@ -11,16 +11,16 @@ export class LocalNuxtCommand extends NuxtCommand {
     }
   }
 
-  static getCommands() {
-    return filterCommands(resolve('.', 'commands')).map(cmd => parse(cmd).name)
+  static getCommands(root = '.') {
+    return filterCommands(resolve(root, 'commands')).map(cmd => parse(cmd).name)
   }
 
-  static loadLocal(cmd) {
-    const cmdsRoot = resolve('.', 'commands')
+  static loadLocal(cmd, root = '.') {
+    const cmdsRoot = resolve(root, 'commands')
     const file = filterCommands(cmdsRoot).find((c) => {
       return parse(c).name === cmd
     })
     const command = requireModule(join(cmdsRoot, file))
-    return NuxtCommand.from({ ...command.default, root: '.' })
+    return NuxtCommand.from({ ...command.default, root })
   }
 }

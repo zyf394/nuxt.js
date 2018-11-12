@@ -1,5 +1,6 @@
 import { filterCommands } from '../utils'
 import NuxtCommand from './index'
+import LocalNuxtCommand from './local'
 
 export class ExternalNuxtCommand extends NuxtCommand {
   static resolve(nuxtModule) {
@@ -18,11 +19,14 @@ export class ExternalNuxtCommand extends NuxtCommand {
 
   static load(nuxtModule, cmd) {
     const modulePath = this.resolve(nuxtModule)
-    const cmdsRoot = resolve(modulePath, 'commands')
-    const file = filterCommands(cmdsRoot).find((c) => {
-      return parse(c).name === cmd
-    })
-    const command = requireModule(join(cmdsRoot, file))
-    return NuxtCommand.from({ ...command.default, root: modulePath })
+    if (LocalNuxtCommand.exists(cmd, modulePath)) {
+      cmd = NuxtCommand.from({
+        ...requireModule(join(modulePath, 'commands', `${cmd}.js`),
+        root: modulePath
+      })
+    } else if (NuxtModule.exists(cmd)) {
+      cmd = NuxtCommand.from({ ...command.default, root: modulePath })
+    }
+    return cmd
   }
 }
