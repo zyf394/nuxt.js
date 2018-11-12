@@ -14,4 +14,13 @@ export class ExternalNuxtCommand extends NuxtCommand {
       }
     } while (resolvers.length)
   }
+  
+  static loadExternal(cmd) {
+    const cmdsRoot = resolve(getExternalCommand(cmd), 'commands')
+    const file = filterCommands(cmdsRoot).find((c) => {
+      return parse(c).name === cmd
+    })
+    const command = requireModule(join(cmdsRoot, file))
+    return NuxtCommand.from(command.default)
+  }
 }
