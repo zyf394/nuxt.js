@@ -10,9 +10,9 @@ export function getExternalCommand(cmd) {
     () => require.resolve(`${cmd}`)
   ]  
   do {
-    cmd = resolvers.shift()()
-    if (cmd) {
-      return cmd
+    const command = resolvers.shift()()
+    if (command) {
+      return command
     }
   } while (resolvers.length)
 }
